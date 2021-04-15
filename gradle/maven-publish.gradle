@@ -1,0 +1,22 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components."${componentType}"
+            artifact(sourcesJar) {
+              classifier "sources"
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username 'deployment'
+                password 'deployment'
+            }
+			ext.repositoryType = isSnapshot ? 'snapshots' : 'releases'
+            url "${artifactsRepository}/repository/apps-${repositoryType}"
+        }
+    }
+}

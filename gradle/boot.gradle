@@ -1,0 +1,30 @@
+apply plugin: 'org.springframework.boot'
+
+bootRun {
+
+    systemProperty 'spring.profiles.active', 'dev'
+    systemProperty 'spring.jms.activemq.url', 'failover:(tcp://localhost:61617)?maxReconnectAttempts=10'
+
+    //systemProperty  'logging.config', '/git/wtn-tools/logback/logback.xml'
+    //systemProperty 'spring.quartz.properties.org.quartz.plugin.jobInitializer.fileNames', '/usr/local/git/alpega/insurance-service/external-jobs.xml'
+
+    jvmArgs '-Xms64m',
+    	    '-Xmx128m',
+    	    '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5090',
+            '-XX:+HeapDumpOnOutOfMemoryError',
+            '-XX:HeapDumpPath=/tmp/' + getDate() + "_${appName}_heapdump.hprof"
+}
+
+bootJar {
+    manifest {
+        attributes 'Implementation-Version': archiveVersion.get()
+    }
+}
+
+def getDate() {
+
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmmss')
+
+    return formattedDate
+}

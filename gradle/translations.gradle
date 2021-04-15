@@ -1,0 +1,30 @@
+apply plugin: 'de.undercouch.download'
+
+task downloadTranslations {
+
+    doLast {
+
+        def headerKey = 'Authorization'
+        def languages = ['es', 'fr', 'de', 'it', 'pl', 'pt', 'nl', 'ro', 'cs']
+        def token = 'token bb016d2309f56769a5c7762ba558c9ab207021ab818ea494078ce69bce6e97b1'
+        def urlPrefix = 'https://api.phrase.com/v2/projects/a2c0c3889104aa27e3c6d0dd418cfcfb/locales/'
+        def urlSuffix = '/download?file_format=properties&include_unverified_translations=false'
+        def formatOptions = '&format_options[escape_meta_chars]=false&format_options[escape_single_quotes]=false'
+
+        download {
+
+            src urlPrefix + 'en' + urlSuffix + formatOptions
+            dest 'i18n/messages/messages.properties'
+            header headerKey, token
+        }
+
+        languages.each { language ->
+
+            download {
+                src urlPrefix + language + urlSuffix + formatOptions
+                dest "i18n/messages/messages_${language}.properties"
+                header headerKey, token
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+apply plugin: 'application'
+
+application {
+    mainClassName = 'com.alpegagroup.insurance.InsuranceApplication'
+}

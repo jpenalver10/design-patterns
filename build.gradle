@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+description = 'Design patterns training'
+group 'com.alpegagroup.training.patterns'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}

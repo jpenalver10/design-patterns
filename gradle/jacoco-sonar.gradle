@@ -1,0 +1,17 @@
+apply plugin: 'jacoco'
+
+ext.reportFile = "${buildDir}/reports/jacoco/jacocoTestReport.xml"
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${reportFile}")
+    }
+}
+
+sonarqube {
+    properties {
+        property 'sonar.coverage.jacoco.xmlReportPaths', "${reportFile}"
+        property 'sonar.cpd.exclusions', '**/com/alpegagroup/insurance/service/mail/strategy/**/*'
+    }
+}

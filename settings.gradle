@@ -1,0 +1,23 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+def String[] modules = [
+	'a-template',
+	'b-strategy',
+	'c-composite',
+	'd-state',
+	'e-decorator'
+]
+
+include modules
+
+rootProject.name = "${projectName}"
+
+modules.each {name ->
+	def p = findProject(":${name}")
+	p.name = "${rootProject.name}-${name}"
+	p.buildFileName = "${name}.gradle"
+}
